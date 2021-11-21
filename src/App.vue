@@ -108,7 +108,7 @@ export default {
         "Affleck, Ben",
         "Agena, Keiko-x",
         "Agnew, Spiro",
-        "Ahbez, Eden",
+        "Ahbez, Ethel",
         "Ahern, Bertie",
         "Ah Koy, James",
         "Aiken, Clay",
