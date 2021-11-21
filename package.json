@@ -20,8 +20,6 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0",
-    "postcss": "^8.3.11",
-    "tailwindcss": "^2.2.19"
   },
   "eslintConfig": {
     "root": true,
