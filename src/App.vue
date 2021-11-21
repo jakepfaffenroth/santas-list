@@ -18,7 +18,7 @@
 
   <input id="filter" v-model="filterText" placeholder="filter" class="mb2" />
 
-  <div style="max-width: fit-content; min-width: 15rem; margin: 0 auto">
+  <div class="listBox">
     <div
       v-for="{ name, status } in filteredList.slice(0, 20)"
       :key="name"
@@ -37,7 +37,9 @@
   <div v-show="filterText.length <= 1" style="margin-top: 2rem">
     Page 1 of 350,000,000
   </div>
-  <span class="copyright">Copyright 2021 The North Pole</span>
+  <span class="copyright"
+    >Copyright 2021 Santa's Workshop<br />The North Pole</span
+  >
 </template>
 
 <script>
@@ -214,12 +216,18 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Londrina+Solid&display=swap");
+
+html {
+  color: white;
+  background-color: firebrick;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  /* color: #2c3e50; */
   margin-top: 60px;
 }
 h1 {
@@ -236,7 +244,8 @@ h1 {
   display: flex;
 }
 .header img {
-  max-width: 15%;
+  width: 15%;
+  max-width: 125px;
 }
 .header .img1 {
   margin-right: auto;
@@ -248,6 +257,28 @@ h1 {
   left: -1rem;
   top: -0.2rem;
   transform: rotate(-35deg);
+}
+input {
+  padding: 8px 16px;
+  width: ;
+}
+.listBox {
+  max-width: 30rem;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  background-color: white;
+  color: initial;
+  border-radius: 8px;
+}
+/* @media (min-width: 24rem) {
+  .listBox {
+    min-width: 30rem;
+  }
+} */
+@media (min-width: 36rem) {
+  .listBox {
+    min-width: 30rem;
+  }
 }
 .flex {
   display: flex;
@@ -293,11 +324,16 @@ h1 {
 }
 .green {
   color: rgb(8, 143, 8);
-  font-weight: bold;
+  font-weight: 900;
 }
 .red {
-  color: firebrick;
-  font-weight: bold;
+  color: #970a0a;;
+  font-weight: 900;
+}
+.red,
+.green {
+  text-shadow: -0.5px -0.5px 0 rgb(255, 214, 214), 0.5px -0.5px 0 rgb(255, 214, 214), -0.5px 0.5px 0 rgb(255, 214, 214),
+    0.5px 0.5px 0 rgb(255, 214, 214);
 }
 .copyright {
   display: block;
