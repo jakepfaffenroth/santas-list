@@ -324,16 +324,28 @@ input {
 }
 .green {
   color: rgb(8, 143, 8);
-  font-weight: 900;
+  font-weight: bold;
 }
 .red {
-  color: #970a0a;;
+  color: firebrick;
+  font-weight: bold;
+}
+h2 .red {
+  color: #8c1a1a;
+  font-weight: 900;
+  text-shadow: -0.5px -0.5px 0 rgb(255, 214, 214),
+    0.5px -0.5px 0 rgb(255, 214, 214), -0.5px 0.5px 0 rgb(255, 214, 214),
+    0.5px 0.5px 0 rgb(255, 214, 214);
+}
+h2 .green {
+  color: #5bd05b;
   font-weight: 900;
 }
 .red,
 .green {
-  text-shadow: -0.5px -0.5px 0 rgb(255, 214, 214), 0.5px -0.5px 0 rgb(255, 214, 214), -0.5px 0.5px 0 rgb(255, 214, 214),
-    0.5px 0.5px 0 rgb(255, 214, 214);
+  /* text-shadow: -0.5px -0.5px 0 rgb(255, 214, 214),
+    0.5px -0.5px 0 rgb(255, 214, 214), -0.5px 0.5px 0 rgb(255, 214, 214),
+    0.5px 0.5px 0 rgb(255, 214, 214); */
 }
 .copyright {
   display: block;
