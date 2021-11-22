@@ -1,7 +1,13 @@
 <template>
   <div class="header">
     <img src="holly.png" alt="" class="img1" />
-    <img src="holly.png" alt="" class="img2" @click="clearSessionStorage" />
+    <img
+      src="holly.png"
+      alt=""
+      class="img2"
+      @click="clearSessionStorage"
+      @tap="clearSessionStorage"
+    />
   </div>
   <h1>
     <img src="hat.png" alt="" class="hat" />
@@ -16,7 +22,12 @@
   </div>
   <div class="mb2 italic" style="text-align: right"></div>
 
-  <input id="filter" v-model="filterText" placeholder="filter" class="mb2" />
+  <div class="mb2" style="position: relative; width:fit-content; margin:0 auto 2rem;">
+    <input id="filter" v-model="filterText" placeholder="Search" class="" />
+    <button class="clearFilter" @click="filterText = ''">
+      <svg class="xBtn" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+    </button>
+  </div>
 
   <div class="listBox">
     <div
@@ -124,9 +135,10 @@ export default {
   },
   methods: {
     clearSessionStorage() {
-      let keys = Array.from(Object.keys(window.sessionStorage));
-      console.log("keys:", keys);
+      // let keys = Array.from(Object.keys(window.sessionStorage));
+      // console.log("keys:", keys);
       window.sessionStorage.clear();
+      this.params = "";
       this.listRaw.splice(this.listRaw.indexOf("Yankovic, Alfred"), 1);
       this.listRaw.push("Yankovic, Alfred");
     },
@@ -258,9 +270,10 @@ h1 {
   top: -0.2rem;
   transform: rotate(-35deg);
 }
-input {
-  padding: 8px 16px;
-  width: ;
+input,
+input:focus {
+  padding: 8px 32px 8px 16px;
+  font-size: 1rem;
 }
 .listBox {
   max-width: 30rem;
@@ -280,6 +293,20 @@ input {
     min-width: 30rem;
   }
 }
+.clearFilter {
+  position: absolute;
+  right:4px;
+  background: none;
+  border: none;
+  height:100%;
+  width: 1.5rem;
+  cursor: pointer;
+}
+/* .xBtn {
+  width: 1rem;
+height: 1rem;
+padding: 4px;
+} */
 .flex {
   display: flex;
 }
