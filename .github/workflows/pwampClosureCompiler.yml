@@ -12,9 +12,9 @@ jobs:
           cache: 'npm'
           cache-dependency-path: .github/actions/google-chat-notification-on-push/package-lock.json
       - run: npm i -g google-closure-compiler
+      - run: OUTPUT=$(google-closure-compiler --js ./src/pwamp.js --js_output_file pwamp.compiled.js)
       - name: Run closure compiler
         run: |
-          OUTPUT=$(google-closure-compiler --js ./src/pwamp.js --js_output_file pwamp.compiled.js)
           OUTPUT="${OUTPUT//'%'/'%25'}"
           OUTPUT="${OUTPUT//$'\n'/'%0A'}"
           OUTPUT="${OUTPUT//$'\r'/'%0D'}"
