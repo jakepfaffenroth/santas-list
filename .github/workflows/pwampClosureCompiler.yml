@@ -13,8 +13,8 @@ jobs:
           cache-dependency-path: .github/actions/google-chat-notification-on-push/package-lock.json
       - run: npm i -g google-closure-compiler
       - name: Run closure compiler
-        # run: echo "::set-output name=compile::$(google-closure-compiler --js ./src/pwamp.js --js_output_file pwamp.compiled.js)"
-        run: google-closure-compiler --js ./src/pwamp.js --js_output_file pwamp.compiled.js
+        run: echo "::set-output name=compile::$(google-closure-compiler --js ./src/pwamp.js --js_output_file pwamp.compiled.js)"
+        # run: google-closure-compiler --js ./src/pwamp.js --js_output_file pwamp.compiled.js
         id: pwamp-closure-compiler
       # - name: Install Google Chat dependencies
       #   run: cd .github/actions/google-chat-notification-on-push && npm ci && cd ../../..
@@ -32,7 +32,7 @@ jobs:
       #     event: "${{toJSON(github.event)}}"
       #     steps: "${{toJSON(steps)}}"
       #   id: modded
-      # - name: Dev Output
-      #   run: |
-      #     echo "${{github.event}}"
-      #     echo "${{steps.findandreplace.outputs.replaced}}"
+      - name: Dev Output
+        run: |
+          echo "${{github.event}}"
+          echo "${{steps.findandreplace.outputs.replaced}}"
