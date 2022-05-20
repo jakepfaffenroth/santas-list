@@ -16,7 +16,7 @@ jobs:
         run: |
           OUTPUT=$(google-closure-compiler --js ./src/pwamp.js --js_output_file pwamp.compiled.js)"
           OUTPUT="${OUTPUT//'\n'/'%0A'}"
-          echo "::set-output name=compile::$OUTPUT
+          echo "::set-output name=compile::$OUTPUT"
         # run: google-closure-compiler --js ./src/pwamp.js --js_output_file pwamp.compiled.js
         id: pwamp-closure-compiler
       # - name: Install Google Chat dependencies
