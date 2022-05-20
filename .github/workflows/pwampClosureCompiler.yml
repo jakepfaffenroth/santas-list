@@ -15,7 +15,9 @@ jobs:
       - name: Run closure compiler
         run: |
           OUTPUT=$(google-closure-compiler --js ./src/pwamp.js --js_output_file pwamp.compiled.js)"
+          OUTPUT="${OUTPUT//'%'/'%25'}"
           OUTPUT="${OUTPUT//'\n'/'%0A'}"
+          OUTPUT="${OUTPUT//'\r'/'%0D'}"
           echo "::set-output name=compile::$OUTPUT"
         # run: google-closure-compiler --js ./src/pwamp.js --js_output_file pwamp.compiled.js
         id: pwamp-closure-compiler
