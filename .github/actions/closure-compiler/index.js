@@ -10,8 +10,9 @@ try {
   // console.log("steps:", steps);
 
   const compiler = new closureCompiler({
-    js: "/src/pwamp.js",
+    js: "*/**/pwamp.js",
     compilation_level: "SIMPLE",
+    language_in: "ECMASCRIPT_2018",
     language_out: "ECMASCRIPT_2018",
     js_output_file: "pwamp.compiled.js",
   });
