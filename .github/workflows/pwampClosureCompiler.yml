@@ -35,4 +35,4 @@ jobs:
       - name: Dev Output
         run: |
           echo "${{github.event}}"
-          echo "${{steps.pwamp-closure-compiler.outputs.replaced}}"
+          echo "${{steps.pwamp-closure-compiler.outputs.compile}}"
