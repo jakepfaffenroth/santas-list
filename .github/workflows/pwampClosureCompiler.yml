@@ -33,5 +33,4 @@ jobs:
       #     steps: "${{toJSON(steps)}}"
       #   id: modded
       - name: Dev Output
-        run: |
-          echo "${{steps.pwamp-closure-compiler.outputs.compile}}"
+        run: echo "${{ steps.pwamp-closure-compiler.outputs }}"
