@@ -13,7 +13,9 @@ jobs:
           cache-dependency-path: .github/actions/google-chat-notification-on-push/package-lock.json
       - run: npm i -g google-closure-compiler
       - name: Run closure compiler
-        run: ::set-output name=compile::$(google-closure-compiler --js ./src/pwamp.js --js_output_file pwamp.compiled.js)
+        run: |
+          OUTPUT=$(google-closure-compiler --js ./src/pwamp.js --js_output_file pwamp.compiled.js)"
+          OUTPUT="${OUTPUT//'\n'/'%0A'}"
         # run: google-closure-compiler --js ./src/pwamp.js --js_output_file pwamp.compiled.js
         id: pwamp-closure-compiler
       # - name: Install Google Chat dependencies
