@@ -1,0 +1,15 @@
+{
+  "name": "PWAMP-Closure-Compiler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [
+    "github action"
+  ],
+  "author": "Jake Pfaffenroth",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.6.0",
+    "google-closure-compiler": "^20220502.0.0"
+  }
+}
