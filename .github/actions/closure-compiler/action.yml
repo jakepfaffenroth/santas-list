@@ -12,8 +12,8 @@ inputs:
     description: 'object'
     required: true
 outputs:
-  chat-msg:
-    description: 'chat msg string literal'
+  compilerOutput:
+    description: 'compiler output msg'
 runs:
   using: 'node12'
   main: 'index.js'
