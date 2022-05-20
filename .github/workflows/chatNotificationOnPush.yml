@@ -1,0 +1,36 @@
+name: Google Chat Notification on Push
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install dependencies
+        run: cd .github/actions/google-chat-notification-on-push && npm ci 
+      - id: files
+        uses: jitterbit/get-changed-files@v1
+        with:
+          # Format of the steps output context.
+          # Can be 'space-delimited', 'csv', or 'json'.
+          # 
+          # Default: 'space-delimited'
+          format: 'json'
+      - name: Format Msg
+        uses: ./.github/actions/google-chat-notification-on-push/
+        with: 
+          event: "${{toJSON(github.event)}}"
+          steps: "${{toJSON(steps)}}"
+        id: modded
+      # - name: Dev Output
+      #   run: |
+      #     echo "${{github.event}}"
+      #     echo "${{steps.findandreplace.outputs.replaced}}"
+      - name: Send Google Chat Notification
+        run: |
+          curl --location --request POST 'https://chat.googleapis.com/v1/spaces/AAAA72wbnqo/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=1iD1-r6ibCBa3VbHdTzYLMp-exJU70e_J0__XvWXQSA%3D' \
+          --header 'Content-Type: application/json' \
+          -d ${{steps.modded.outputs.chat-msg}}

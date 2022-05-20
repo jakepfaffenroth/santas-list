@@ -1,0 +1,43 @@
+name: PWAMP Closure Compiler
+on: push
+
+jobs:
+  pwamp_closure_compiler:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          cache: 'npm'
+          cache-dependency-path: .github/actions/google-chat-notification-on-push/package-lock.json
+      - run: npm i -g google-closure-compiler
+      - name: Run closure compiler
+        # run: echo "::set-output name=compile::$(google-closure-compiler --js ./src/pwamp.js --js_output_file pwamp.compiled.js)"
+        run: google-closure-compiler --js ./src/main.js --js_output_file main.compiled.js
+        id: pwamp-closure-compiler
+      # - name: Install Google Chat dependencies
+      #   run: cd .github/actions/google-chat-notification-on-push && npm ci && cd ../../..
+      # - id: files
+      #   uses: jitterbit/get-changed-files@v1
+      #   with:
+      #     # Format of the steps output context.
+      #     # Can be 'space-delimited', 'csv', or 'json'.
+      #     # 
+      #     # Default: 'space-delimited'
+      #     format: 'json'
+      # - name: Format Msg
+      #   uses: ./.github/actions/google-chat-notification-on-push/
+      #   with: 
+      #     event: "${{toJSON(github.event)}}"
+      #     steps: "${{toJSON(steps)}}"
+      #   id: modded
+      # - name: Dev Output
+      #   run: |
+      #     echo "${{github.event}}"
+      #     echo "${{steps.findandreplace.outputs.replaced}}"
+      # - name: Send Google Chat Notification
+      #   run: |
+      #     curl --location --request POST 'https://chat.googleapis.com/v1/spaces/AAAA72wbnqo/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=1iD1-r6ibCBa3VbHdTzYLMp-exJU70e_J0__XvWXQSA%3D' \
+      #     --header 'Content-Type: application/json' \
+      #     -d ${{steps.modded.outputs.chat-msg}}
