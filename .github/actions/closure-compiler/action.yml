@@ -11,6 +11,9 @@ inputs:
   steps:
     description: 'object'
     required: true
+  secrets:
+    description: 'object'
+    required: true
 outputs:
   compilerOutput:
     description: 'compiler output msg'

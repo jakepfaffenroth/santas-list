@@ -302,6 +302,7 @@ function makeChatMsg(outputMsg) {
 }
 
 async function sendChatMsg(chatMsg) {
+  // console.log('core.getInput("secrets"):', core.getInput("secrets"));
   const { gchat_webhook } = JSON.parse(core.getInput("secrets"));
   console.log("gchat_webhook:", gchat_webhook);
   await axios.post(gchat_webhook, chatMsg, {
