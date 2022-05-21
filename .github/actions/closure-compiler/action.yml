@@ -11,8 +11,8 @@ inputs:
   steps:
     description: 'object'
     required: true
-  secrets:
-    description: 'object'
+  gchat_webhook:
+    description: 'string'
     required: true
 outputs:
   compilerOutput:
