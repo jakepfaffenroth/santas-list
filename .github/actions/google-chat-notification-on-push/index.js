@@ -1,36 +1,40 @@
 const core = require("@actions/core");
 
-try {
-  const event = JSON.parse(core.getInput("event"));
-  const steps = JSON.parse(core.getInput("steps"));
-  console.log("steps:", steps);
+createNotificationMsg();
+modules.exports = createNotificationMsg;
 
-  // Quote literals will break things.
-  event.commits.forEach((commit) => {
-    // console.log("commit:", commit);
-    sanitize(commit);
-  });
+function createNotificationMsg() {
+  try {
+    const event = JSON.parse(core.getInput("event"));
+    const steps = JSON.parse(core.getInput("steps"));
+    console.log("steps:", steps);
 
-  function sanitize(obj) {
-    Object.keys(obj).forEach((key) => {
-      if (typeof obj[key] == "string") {
-        obj[key] = obj[key].replace(/"|'/g, "");
-      } else {
-        sanitize(obj[key]);
-      }
-      return;
+    // Quote literals will break things.
+    event.commits.forEach((commit) => {
+      // console.log("commit:", commit);
+      sanitize(commit);
     });
-  }
-  const lastCommit = event.commits[event.commits.length - 1];
 
-  // [...new Set] removes duplicate names
-  const commitAuthors = [
-    ...new Set(event.commits.map((x) => x.committer.name)),
-  ];
-  // console.log('commitAuthors:', commitAuthors);
-  const fileChangeCount = JSON.parse(steps.files.outputs.all).length;
+    function sanitize(obj) {
+      Object.keys(obj).forEach((key) => {
+        if (typeof obj[key] == "string") {
+          obj[key] = obj[key].replace(/"|'/g, "");
+        } else {
+          sanitize(obj[key]);
+        }
+        return;
+      });
+    }
+    const lastCommit = event.commits[event.commits.length - 1];
 
-  const chatMsg = `'{
+    // [...new Set] removes duplicate names
+    const commitAuthors = [
+      ...new Set(event.commits.map((x) => x.committer.name)),
+    ];
+    // console.log('commitAuthors:', commitAuthors);
+    const fileChangeCount = JSON.parse(steps.files.outputs.all).length;
+
+    const chatMsg = `'{
     "cards": [
       {
         "header": {
@@ -45,10 +49,10 @@ try {
               {
                 "textParagraph": {
                   "text": "Includes:\n<b>${event.commits.length} commit${
-    event.commits.length === 1 ? "" : "s"
-  }</b> by ${commitAuthors.join(", ")}\n<b>${fileChangeCount} file${
-    fileChangeCount === 1 ? "" : "s"
-  }</b> changed",
+      event.commits.length === 1 ? "" : "s"
+    }</b> by ${commitAuthors.join(", ")}\n<b>${fileChangeCount} file${
+      fileChangeCount === 1 ? "" : "s"
+    }</b> changed",
                 }
               },
               {
@@ -82,7 +86,11 @@ try {
                 "topLabel": "Timestamp",
                 "content": "${new Date(lastCommit.timestamp).toLocaleString(
                   "en-US",
-                  {timeZone: 'America/Los_Angeles', dateStyle: 'short', timeStyle: 'short'}
+                  {
+                    timeZone: "America/Los_Angeles",
+                    dateStyle: "short",
+                    timeStyle: "short",
+                  }
                 )}",
                 "contentMultiline": "true",
                 }
@@ -122,8 +130,8 @@ try {
     ]
   }'`;
 
-  core.setOutput("chat-msg", chatMsg);
-
-} catch (error) {
-  core.setFailed(error.message);
+    core.setOutput("chat-msg", chatMsg);
+  } catch (error) {
+    core.setFailed(error.message);
+  }
 }

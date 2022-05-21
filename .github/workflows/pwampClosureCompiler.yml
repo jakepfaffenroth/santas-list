@@ -10,32 +10,7 @@ jobs:
         with:
           node-version: 14
           cache: 'npm'
-          cache-dependency-path: .github/actions/google-chat-notification-on-push/package-lock.json
-      - uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin' # See 'Supported distributions' for available options
-          java-version: '17'
-      - name: Install dependencies
-        run: cd .github/actions/closure-compiler && npm ci && cd ../../..
-      - run: npm i -g google-closure-compiler
-      # - run: OUTPUT=$(google-closure-compiler --js ./src/pwamp.js --js_output_file pwamp.compiled.js)
-      # - name: Run closure compiler
-      #   run: |
-      #     OUTPUT="${OUTPUT//'%'/'%25'}"
-      #     OUTPUT="${OUTPUT//$'\n'/'%0A'}"
-      #     OUTPUT="${OUTPUT//$'\r'/'%0D'}"
-      #     echo $OUTPUT
-      #     echo "::set-output name=compile::$OUTPUT"
-      #   # run: google-closure-compiler --js ./src/pwamp.js --js_output_file pwamp.compiled.js
-      #   id: pwamp-closure-compiler
-      - name: Run closure compiler
-        uses: ./.github/actions/closure-compiler/
-        with: 
-          event: "${{toJSON(github.event)}}"
-          steps: "${{toJSON(steps)}}"
-        id: pwamp-closure-compiler
-      # - name: Install Google Chat dependencies
-      #   run: cd .github/actions/google-chat-notification-on-push && npm ci && cd ../../..
+          cache-dependency-path: .github/actions/closure-compiler/package-lock.json
       # - id: files
       #   uses: jitterbit/get-changed-files@v1
       #   with:
@@ -44,6 +19,22 @@ jobs:
       #     # 
       #     # Default: 'space-delimited'
       #     format: 'json'
+      - name: Install dependencies
+        run: cd .github/actions/closure-compiler && npm ci && cd ../../..
+      - name: Run closure compiler
+        uses: ./.github/actions/closure-compiler/
+        with: 
+          event: "${{toJSON(github.event)}}"
+          steps: "${{toJSON(steps)}}"
+          secrets: "${{toJSON(secrets)}}"
+        id: pwamp-closure-compiler
+      # - name: Send Google Chat Notification
+      #   run: |
+      #     curl --location --request POST '${{ secrets.gchat_webhook }}' \
+      #     --header 'Content-Type: application/json' \
+      #     -d ${{steps.pwamp-closure-compiler.outputs.chat-msg}}
+      # - name: Install Google Chat dependencies
+      #   run: cd .github/actions/google-chat-notification-on-push && npm ci && cd ../../..
       # - name: Format Msg
       #   uses: ./.github/actions/google-chat-notification-on-push/
       #   with: 
@@ -51,4 +42,6 @@ jobs:
       #     steps: "${{toJSON(steps)}}"
       #   id: modded
       - name: Dev Output
-        run: echo "${{toJSON(steps)}}"
+        run: |
+          echo "${{toJSON(github)}}"
+          echo "${{toJSON(steps)}}"
