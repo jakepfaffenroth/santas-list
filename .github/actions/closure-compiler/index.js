@@ -310,12 +310,17 @@ async function sendChatMsg(chatMsg) {
     const gchat_webhook =
       "https://chat.googleapis.com/v1/spaces/AAAA3NnlvUE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=M8EZgYF-vyXvIsZCcK2H75Ruw93A5y6hNCisLvSY4rw%3D";
     // console.log("gchat_webhook:", gchat_webhook);
-    const response = await axios.post(gchat_webhook, chatMsg, {
+    const response = await axios({
+      method: "POST",
+      url: "https://chat.googleapis.com/v1/spaces/AAAA3NnlvUE/messages",
       params: {
-        compilation_level: "SIMPLE",
-        language_out: "ECMASCRIPT5",
+        key: "AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI",
+        token: "M8EZgYF-vyXvIsZCcK2H75Ruw93A5y6hNCisLvSY4rw=",
       },
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+      },
+      data: chatMsg,
     });
     // console.log("response:", response);
     debugger;
