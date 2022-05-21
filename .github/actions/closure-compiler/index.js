@@ -173,8 +173,8 @@ async function readPWAMP() {
 
 function makeChatMsg(outputMsg) {
   // console.log("typeof outputMsg:", typeof outputMsg);
-  const outputMsgNew = encodeURI(outputMsg);
-  console.log("outputMsgNew:", outputMsgNew);
+  // const outputMsgNew = encodeURI(outputMsg);
+  console.log("outputMsg:", outputMsg);
   // const event = JSON.parse(core.getInput("event"));
   // const steps = JSON.parse(core.getInput("steps"));
 
@@ -273,39 +273,53 @@ function makeChatMsg(outputMsg) {
   //     },
   //   ]
   // }'`;
-  const chatMsg = `'{
-    "cards": [
+  const chatMsg = JSON.stringify({
+    cards: [
       {
-        "header": {
-          "title": "PWAMP Compile Error!",
-          "subtitle": "Pushed by xxx",
-          "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/1024px-Git_icon.svg.png",
-          "imageStyle": "IMAGE"
+        header: {
+          title: "PWAMP compiling failed!!",
         },
-        "sections": [
+        sections: [
           {
-            "widgets": [
+            widgets: [
               {
-                "textParagraph": {
-                  "text": "${outputMsgNew}",
-                }
-              }
+                image: {
+                  imageUrl:
+                    "https://miro.medium.com/max/552/1*ON_d7DWgW8g8uu3EBntfNw.png",
+                },
+              },
+              {
+                textParagraph: {
+                  text: `"${outputMsg}"`,
+                },
+              },
             ],
           },
-        ]
+        ],
       },
-    ]
-  }'`;
+    ],
+  });
 
   core.setOutput("chat-msg", chatMsg);
   return chatMsg;
 }
 
 async function sendChatMsg(chatMsg) {
-  // console.log('core.getInput("secrets"):', core.getInput("secrets"));
-  const gchat_webhook = core.getInput("gchat_webhook");
-  console.log("gchat_webhook:", gchat_webhook);
-  await axios.post(gchat_webhook, chatMsg, {
-    headers: { "Content-Type": "application/json" },
-  });
+  try {
+    // console.log('core.getInput("secrets"):', core.getInput("secrets"));
+    const gchat_webhook =
+      "https://chat.googleapis.com/v1/spaces/AAAA3NnlvUE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=M8EZgYF-vyXvIsZCcK2H75Ruw93A5y6hNCisLvSY4rw%3D";
+    // console.log("gchat_webhook:", gchat_webhook);
+    const response = await axios.post(gchat_webhook, chatMsg, {
+      params: {
+        compilation_level: "SIMPLE",
+        language_out: "ECMASCRIPT5",
+      },
+      headers: { "Content-Type": "application/json" },
+    });
+    // console.log("response:", response);
+    debugger;
+  } catch (err) {
+    console.log(err);
+  }
 }
