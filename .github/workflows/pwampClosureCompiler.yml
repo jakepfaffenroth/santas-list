@@ -3,6 +3,8 @@ on:
   push:
     paths:
       - '**/pwamp.js'
+      - '.github/workflows/pwampClosureCompiler.yml'
+      - '.github/actions/closure-compiler'
 
 jobs:
   pwamp_closure_compiler:

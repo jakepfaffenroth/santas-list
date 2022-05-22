@@ -183,6 +183,9 @@ function makeChatMsg(outputMsg) {
     err = err.trim();
   });
   outputMsg = errs.join("\n\n");
+  
+  console.log("outputMsg:", outputMsg);
+
   const chatMsg = JSON.stringify({
     cards: [
       {
