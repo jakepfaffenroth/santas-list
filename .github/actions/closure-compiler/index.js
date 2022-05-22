@@ -173,15 +173,25 @@ async function readPWAMP() {
 }
 
 function makeChatMsg(outputMsg) {
-  const pwampUrl = `https://github.com/wompmobile/BedBathBeyond/blob/${github.ref_name}/src/pwamp.js#L`;
+  // const pwampUrl = `https://github.com/${github.repository}/blob/${github.ref_name}/src/pwamp.js#L`;
   const errs = outputMsg.match(/Input.*\n*.*/gm);
   const newMsgArr = [];
   console.log("errs:", errs);
   errs.forEach((err) => {
     const line = (err.match(/(?<=:)[0-9]+/) || [""])[0];
-    err = err.replaceAll("\n\n", "\n");
+    err = err
+      .replaceAll("\n\n", "\n")
+      .replaceAll(
+        /(?<=:)\s?(?<feature>.*[^\.])/gm,
+        '<strong style="color: red;">$&</strong'
+      );
     newMsgArr.push(
-      (err + `\n<a href="${pwampUrl + line}">View on GitHub</a>`).trim()
+      (
+        err +
+        `\n<a href="https://github.com/${github.repository}/blob/${github.ref_name}/src/pwamp.js#L${line}">
+          View on GitHub
+        </a>`
+      ).trim()
     );
   });
   outputMsgNew = newMsgArr.join("\n\n");

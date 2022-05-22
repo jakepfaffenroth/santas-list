@@ -46,7 +46,7 @@ jobs:
       #     event: "${{toJSON(github.event)}}"
       #     steps: "${{toJSON(steps)}}"
       #   id: modded
-      - name: Dev Output
-        run: |
-          echo "${{toJSON(github)}}"
-          echo "${{toJSON(steps)}}"
+      # - name: Dev Output
+      #   run: |
+      #     echo "${{toJSON(github)}}"
+      #     echo "${{toJSON(steps)}}"
