@@ -18,7 +18,7 @@
     event-subscription model
       pwaDomAdded event fires when amp-lists add dynamic content
 
-  Environment Notes:
+  Environment Notes:f
     Closure compiler will be used to transpile to es5. Have fun with es6 features.
     Modern Browser APIs are polyfilled in appshell with companion appshell script id="wmPolyfill".
     Pwa script can be initialized/overwritten with optional pwaSessionInit JSON-LD object.

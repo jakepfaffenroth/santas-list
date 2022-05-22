@@ -172,107 +172,17 @@ async function readPWAMP() {
 }
 
 function makeChatMsg(outputMsg) {
-  // console.log("typeof outputMsg:", typeof outputMsg);
-  // const outputMsgNew = encodeURI(outputMsg);
-  console.log("outputMsg:", outputMsg);
-  // const event = JSON.parse(core.getInput("event"));
-  // const steps = JSON.parse(core.getInput("steps"));
-
-  // const chatMsg = `'{
-  //   "cards": [
-  //     {
-  //       "header": {
-  //         "title": "PWAMP Compile Error!",
-  //         "subtitle": "Pushed by ${event.pusher.name}",
-  //         "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/1024px-Git_icon.svg.png",
-  //         "imageStyle": "IMAGE"
-  //       },
-  //       "sections": [
-  //         {
-  //           "widgets": [
-  //             {
-  //               "textParagraph": {
-  //                 "text": "Includes:\n<b>${event.commits.length} commit${
-  //   event.commits.length === 1 ? "" : "s"
-  // }</b> by ${commitAuthors.join(", ")}\n<b>${fileChangeCount} file${
-  //   fileChangeCount === 1 ? "" : "s"
-  // }</b> changed",
-  //               }
-  //             },
-  //             {
-  //               "buttons":[
-  //                 {
-  //                   "textButton": {
-  //                     "text": "View diff on GitHub",
-  //                     "onClick": {
-  //                       "openLink": {
-  //                         "url": "${event.compare}"
-  //                       }
-  //                     }
-  //                   }
-  //                 }
-  //               ]
-  //             },
-  //             {
-  //               "textParagraph": {
-  //                 "text": "<b>Most Recent Commit:</b>",
-  //               }
-  //             },
-  //             {
-  //               "keyValue": {
-  //               "topLabel": "Msg",
-  //               "content": "${lastCommit.message}",
-  //               "contentMultiline": "true",
-  //               }
-  //             },
-  //             {
-  //               "keyValue": {
-  //               "topLabel": "Timestamp",
-  //               "content": "${new Date(lastCommit.timestamp).toLocaleString(
-  //                 "en-US",
-  //                 {
-  //                   timeZone: "America/Los_Angeles",
-  //                   dateStyle: "short",
-  //                   timeStyle: "short",
-  //                 }
-  //               )}",
-  //               "contentMultiline": "true",
-  //               }
-  //             },
-  //             {
-  //               "keyValue": {
-  //               "topLabel": "Author",
-  //               "content": "${lastCommit.committer.name}",
-  //               "contentMultiline": "true",
-  //               }
-  //             },
-  //             {
-  //               "keyValue": {
-  //               "topLabel": "Hash",
-  //               "content": "${lastCommit.id}",
-  //               "contentMultiline": "true",
-  //               }
-  //             },
-  //             {
-  //               "buttons":[
-  //                 {
-  //                   "textButton": {
-  //                     "text": "View commit on GitHub",
-  //                     "onClick": {
-  //                       "openLink": {
-  //                         "url": "${lastCommit.url}"
-  //                       }
-  //                     }
-  //                   }
-  //                 }
-  //               ]
-  //             }
-  //           ],
-  //         },
-  //       ]
-  //     },
-  //   ]
-  // }'`;
+  const pwampUrl =
+    "https://github.com/wompmobile/BedBathBeyond/blob/main/src/pwamp.js";
+  const errs = outputMsg.match(/Input.*\n*.*/gm);
+  errs.forEach((err) => {
+    const line = (err.match(/(?<=:)[0-9]+/) || [""])[0];
+    err += `
+      ${pwampUrl}#${line}
+    `;
+    err = err.trim();
+  });
+  outputMsg = errs.join("\n\n");
   const chatMsg = JSON.stringify({
     cards: [
       {
