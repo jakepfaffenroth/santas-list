@@ -182,9 +182,9 @@ function makeChatMsg(outputMsg) {
     `;
     err = err.trim();
   });
-  outputMsg = errs.join("\n\n");
-  
-  console.log("outputMsg:", outputMsg);
+  outputMsgNew = errs.join("\n\n");
+
+  console.log("outputMsgNew:", outputMsgNew);
 
   const chatMsg = JSON.stringify({
     cards: [
@@ -203,7 +203,7 @@ function makeChatMsg(outputMsg) {
               },
               {
                 textParagraph: {
-                  text: `"${outputMsg}"`,
+                  text: `"${outputMsgNew}"`,
                 },
               },
             ],
