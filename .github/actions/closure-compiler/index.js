@@ -183,12 +183,12 @@ function makeChatMsg(outputMsg) {
       .replaceAll("\n\n", "\n")
       .replaceAll(
         /(?<=:)[^0-9]\s?(?<feature>.*[^\.])/gm,
-        '<b><font color="#C92A2A">$&</font></b'
+        '<br><b><font color="#C92A2A">$&</font></b'
       );
     newMsgArr.push(
       (
         err +
-        `\n<a href="https://github.com/${github.repository}/blob/${github.ref_name}/src/pwamp.js#L${line}">
+        `<br><a href="https://github.com/${github.repository}/blob/${github.ref_name}/src/pwamp.js#L${line}">
           View on GitHub
         </a>`
       ).trim()
