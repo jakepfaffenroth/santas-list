@@ -5,7 +5,7 @@ branding:
   icon: bold
   color: orange
 inputs:
-  event:
+  github:
     description: 'object'
     required: true
   steps:
