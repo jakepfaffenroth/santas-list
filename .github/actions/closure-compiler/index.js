@@ -181,12 +181,7 @@ function makeChatMsg(outputMsg) {
     const line = (err.match(/(?<=:)[0-9]+/) || [""])[0];
     err = err.replaceAll("\n\n", "\n");
     newMsgArr.push(
-      (
-        err +
-        `
-          <a href="${pwampUrl + line}">View on GitHub</a>
-        `
-      ).trim()
+      (err + `\n<a href="${pwampUrl + line}">View on GitHub</a>`).trim()
     );
   });
   outputMsgNew = newMsgArr.join("\n\n");
