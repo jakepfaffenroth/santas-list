@@ -4,7 +4,7 @@
  * Please visit http://www.wompmobile.com/license for more information.
  */
 
-/*c
+/*
   Pwa features:
     Load multiple documents at once
     Base size - 10KB gzipped
