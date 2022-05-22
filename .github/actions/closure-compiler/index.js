@@ -183,7 +183,7 @@ function makeChatMsg(outputMsg) {
       .replaceAll("\n\n", "\n")
       .replaceAll(
         /(?<=:)[^0-9]\s?(?<feature>.*[^\.])/gm,
-        '<strong style="color: red;">$&</strong'
+        '<b><font color="">="color: red;">$&</font></b'
       );
     newMsgArr.push(
       (
