@@ -188,9 +188,7 @@ function makeChatMsg(outputMsg) {
     newMsgArr.push(
       (
         err +
-        `<br><a href="https://github.com/${github.repository}/blob/${github.ref_name}/src/pwamp.js#L${line}">
-          View on GitHub
-        </a>`
+        `<br><a href="https://github.com/${github.repository}/blob/${github.ref_name}/src/pwamp.js#L${line}">View on GitHub</a>`
       ).trim()
     );
   });
