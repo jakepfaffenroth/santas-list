@@ -544,7 +544,7 @@ class AmpCore {
   ampValidateResponseDoc(domText, urlObj) {
     /* 6.15.21 JW temp CBCC domain cutover compatibility */
     if (this.pwa.session.isBABY) {
-      let isCbccBaby = !/(bbbabyapp|buybuybaby)\.com/i.test(location.hostname);
+      let isCbccBaby = !/(bbbabyapp|buybuybaby)\.com/si.test(location.hostname);
       let hostName = location.hostname,
         replacedHostReg;
       if (isCbccBaby) {

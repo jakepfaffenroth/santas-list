@@ -184,7 +184,7 @@ function makeChatMsg(outputMsg) {
       (
         err +
         `
-          <a href="${pwampUrl}#L${line}">View pwamp.js:${line} on GitHub</a>
+          <a href="${pwampUrl + line}">View on GitHub</a>
         `
       ).trim()
     );
