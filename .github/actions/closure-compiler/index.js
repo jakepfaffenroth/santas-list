@@ -1,6 +1,7 @@
 const core = require("@actions/core");
 const fs = require("fs/promises");
 const axios = require("axios");
+const github = JSON.parse(core.getInput("github"));
 // const createNotificationMsg = require("../google-chat-notification-on-push");
 // const closureCompiler = require("google-closure-compiler").compiler;
 // closureCompiler.prototype.javaPath = '/usr/bin/java';
@@ -172,19 +173,19 @@ async function readPWAMP() {
 }
 
 function makeChatMsg(outputMsg) {
-  const pwampUrl =
-    "https://github.com/wompmobile/BedBathBeyond/blob/main/src/pwamp.js";
+  const pwampUrl = `https://github.com/wompmobile/BedBathBeyond/blob/${github.ref_name}/src/pwamp.js#L`;
   const errs = outputMsg.match(/Input.*\n*.*/gm);
   const newMsgArr = [];
   console.log("errs:", errs);
   errs.forEach((err) => {
     const line = (err.match(/(?<=:)[0-9]+/) || [""])[0];
+    err = err.replaceAll("\n\n", "\n");
     newMsgArr.push(
       (
         err +
         `
-      ${pwampUrl}#${line}
-    `
+          <a href="${pwampUrl}#L${line}">View pwamp.js:${line} on GitHub</a>
+        `
       ).trim()
     );
   });
