@@ -175,6 +175,7 @@ function makeChatMsg(outputMsg) {
   const pwampUrl =
     "https://github.com/wompmobile/BedBathBeyond/blob/main/src/pwamp.js";
   const errs = outputMsg.match(/Input.*\n*.*/gm);
+console.log("errs:", errs);
   errs.forEach((err) => {
     const line = (err.match(/(?<=:)[0-9]+/) || [""])[0];
     err += `
