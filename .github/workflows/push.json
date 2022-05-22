@@ -1,0 +1,10 @@
+{
+  "push": {
+    "head": {
+      "ref": "main"
+    },
+    "base": {
+      "ref": "main"
+    }
+  }
+}

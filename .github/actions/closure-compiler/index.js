@@ -323,7 +323,7 @@ async function sendChatMsg(chatMsg) {
       data: chatMsg,
     });
     // console.log("response:", response);
-    debugger;
+
   } catch (err) {
     console.log(err);
   }

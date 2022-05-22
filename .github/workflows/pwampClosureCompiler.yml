@@ -1,5 +1,8 @@
 name: PWAMP Closure Compiler
-on: push
+on: 
+  push:
+    paths:
+      - '**/pwamp.js'
 
 jobs:
   pwamp_closure_compiler:
@@ -11,14 +14,14 @@ jobs:
           node-version: 16
           cache: 'npm'
           cache-dependency-path: .github/actions/closure-compiler/package-lock.json
-      # - id: files
-      #   uses: jitterbit/get-changed-files@v1
-      #   with:
-      #     # Format of the steps output context.
-      #     # Can be 'space-delimited', 'csv', or 'json'.
-      #     # 
-      #     # Default: 'space-delimited'
-      #     format: 'json'
+      - id: files
+        uses: jitterbit/get-changed-files@v1
+        with:
+          # Format of the steps output context.
+          # Can be 'space-delimited', 'csv', or 'json'.
+          # 
+          # Default: 'space-delimited'
+          format: 'json'
       - name: Install dependencies
         run: cd .github/actions/closure-compiler && npm ci && cd ../../..
       - name: Run closure compiler
