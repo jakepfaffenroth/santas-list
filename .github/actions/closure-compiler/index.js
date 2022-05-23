@@ -28,10 +28,10 @@ async function readPWAMP() {
     const pwamp = await fs.readFile("./src/pwamp.js", { encoding: "utf8" });
 
     const response = await axios.post(
-      "https://wompclosure.azurewebsites.net/compile",
+      "https://wompclosure.azurewebsites.net/compile?compilation_level=SIMPLE&language_out=ECMASCRIPT5",
       pwamp
     );
-    console.log("response.data:", response.data);
+    // console.log("response.data:", response.data);
 
     if (!response.data.success) {
       return response.data.error;
@@ -188,8 +188,9 @@ function makeChatMsg(outputMsg) {
     newMsgArr.push(
       (
         err +
-        `<br> PWAMP Line ${line}
-        <br><a href="https://github.com/${github.repository}/blob/${github.ref_name}/src/pwamp.js#L${line}">View on GitHub</a>`
+        `
+        PWAMP Line ${line}
+        <a href="https://github.com/${github.repository}/blob/${github.ref_name}/src/pwamp.js#L${line}">View on GitHub</a>`
       ).trim()
     );
   });
