@@ -26,13 +26,20 @@ jobs:
       #     format: 'json'
       - name: Install dependencies
         run: cd .github/actions/closure-compiler && npm ci && cd ../../..
+      - name: Install google-closure-compiler
+        run: npm i -g google-closure-compiler
+        # ------- #
       - name: Run closure compiler
-        uses: ./.github/actions/closure-compiler/
-        with: 
-          github: "${{toJSON(github)}}"
-          steps: "${{toJSON(steps)}}"
-          gchat_webhook: "${{secrets.gchat_webhook}}"
-        id: pwamp-closure-compiler
+        run: google-closure-compiler --js ./src/pwamp.js --compilation_level SIMPLE --language_out ECMASCRIPT5 --warning_level QUIET
+        # ------- #
+      # - name: Run closure compiler
+      #   uses: ./.github/actions/closure-compiler/
+      #   with: 
+      #     github: "${{toJSON(github)}}"
+      #     steps: "${{toJSON(steps)}}"
+      #     gchat_webhook: "${{secrets.gchat_webhook}}"
+      #   id: pwamp-closure-compiler
+        # ------- #
       # - name: Send Google Chat Notification
       #   run: |
       #     curl --location --request POST '${{ secrets.gchat_webhook }}' \
