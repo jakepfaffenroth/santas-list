@@ -30,7 +30,9 @@ jobs:
         run: npm i -g google-closure-compiler
         # ------- #
       - name: Run closure compiler
-        run: google-closure-compiler --js ./src/pwamp.js --compilation_level SIMPLE --language_out ECMASCRIPT5 --warning_level QUIET
+        run: echo '::set-output name=compilerOutput$(google-closure-compiler --js ./src/pwamp.js --compilation_level SIMPLE --language_out ECMASCRIPT5 --warning_level QUIET)'
+      # - name: Handle output
+      #   run: echo "${{toJSON(steps)}}"
         # ------- #
       # - name: Run closure compiler
       #   uses: ./.github/actions/closure-compiler/
@@ -53,7 +55,7 @@ jobs:
       #     event: "${{toJSON(github.event)}}"
       #     steps: "${{toJSON(steps)}}"
       #   id: modded
-      # - name: Dev Output
-      #   run: |
-      #     echo "${{toJSON(github)}}"
-      #     echo "${{toJSON(steps)}}"
+      - name: Dev Output
+        run: |
+          echo "${{toJSON(github)}}"
+          echo "${{toJSON(steps)}}"
