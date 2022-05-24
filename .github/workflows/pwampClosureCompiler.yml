@@ -31,6 +31,7 @@ jobs:
         # ------- #
       - name: Run closure compiler
         run: echo '::set-output name=compilerOutput::$(google-closure-compiler --js ./src/pwamp.js --compilation_level SIMPLE --language_out ECMASCRIPT5 --warning_level QUIET)'
+        id: pwamp-closure-compiler
       # - name: Handle output
       #   run: echo "${{toJSON(steps)}}"
         # ------- #
@@ -56,6 +57,6 @@ jobs:
       #     steps: "${{toJSON(steps)}}"
       #   id: modded
       - name: Dev Output
+          # echo "${{toJSON(github)}}"
         run: |
-          echo "${{toJSON(github)}}"
           echo "${{toJSON(steps)}}"
