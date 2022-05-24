@@ -30,7 +30,12 @@ jobs:
         run: npm i -g google-closure-compiler
         # ------- #
       - name: Run closure compiler
-        run: echo '::set-output name=compilerOutput::$(google-closure-compiler --js ./src/pwamp.js --compilation_level SIMPLE --language_out ECMASCRIPT5 --warning_level QUIET)'
+        run: google-closure-compiler --js ./src/pwamp.js --compilation_level SIMPLE --language_out ECMASCRIPT5 --warning_level QUIET 2>&1 > output.txt
+        # run: compilerOutput=$((google-closure-compiler --js ./src/pwamp.js --compilation_level SIMPLE --language_out ECMASCRIPT5 --warning_level QUIET) 2>&1) && echo "::set-output name=compilerOutput::$compilerOutput" && echo "${{steps.pwamp-closure-compiler.outputs.compilerOutput}}"
+        # run: echo "::set-output name=outputMsg::'$(echo $(google-closure-compiler --js ./src/pwamp.js --compilation_level SIMPLE --language_out ECMASCRIPT5 --warning_level QUIET) 2>@1)'"
+        # id: pwamp-closure-compiler
+      - name: Save output to var
+        run: echo "::set-output name=compilerOutput::$(cat output.txt)"
         id: pwamp-closure-compiler
       # - name: Handle output
       #   run: echo "${{toJSON(steps)}}"
