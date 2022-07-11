@@ -25,7 +25,7 @@ jobs:
         with:
           prettier: true
           auto_fix: true
-          git_email: github-action@example.com
+          git_email: dev@wompmobile.com
       # - name: Install closeure compiler
       #   run: npm i -g google-closure-compiler
       # - name: Run closure compiler
