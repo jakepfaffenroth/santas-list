@@ -3,6 +3,9 @@ const fs = require("fs/promises");
 const axios = require("axios");
 const github = JSON.parse(core.getInput("github"));
 github.ref_name = github.ref_name || "main";
+const outputs = JSON.parse(core.getInput("steps"))["pwamp-closure-compiler"]
+  .outputs;
+console.log("outputs:", outputs);
 
 runCompilerChecks();
 

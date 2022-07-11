@@ -1,67 +1,55 @@
-name: PWAMP Closure Compiler
-on: 
-  push:
-    paths:
-      - '**/pwamp.js'
-      - '.github/workflows/pwampClosureCompiler.yml'
-      - '.github/actions/closure-compiler/*'
+name: Run Checks
+on: [push]
+
+permissions:
+  checks: write
+  contents: write
 
 jobs:
-  pwamp_closure_compiler:
-    runs-on: ubuntu-18.04
+  run-checks:
+    runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
-          node-version: 16
-          cache: 'npm'
-          cache-dependency-path: .github/actions/closure-compiler/package-lock.json
+          # Make sure the actual branch is checked out when running on pull requests
+          ref: ${{ github.head_ref }}
+          # This is important to fetch the changes to the previous commit
+          fetch-depth: 0
+          token: GITHUB_TOKEN
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+      - name: Install dependencies
+        run: npm ci 
+      - name: Run linters
+        uses: wearerequired/lint-action@v2
+        with:
+          prettier: true
+      - name: Install closeure compiler
+        run: npm i -g google-closure-compiler
+      - name: Run closure compiler
+        run: echo "::set-output name=compile::$(google-closure-compiler --js ./src/pwamp.js --js_output_file pwamp.compiled.js)"
+        id: pwamp-closure-compiler
       # - id: files
       #   uses: jitterbit/get-changed-files@v1
       #   with:
       #     # Format of the steps output context.
       #     # Can be 'space-delimited', 'csv', or 'json'.
-      #     # 
+      #     #
       #     # Default: 'space-delimited'
       #     format: 'json'
-      - name: Install dependencies
-        run: cd .github/actions/closure-compiler && npm ci && cd ../../..
-      - name: Install google-closure-compiler
-        run: npm i -g google-closure-compiler
-        # ------- #
-      - name: Run closure compiler
-        run: google-closure-compiler --js ./src/pwamp.js --compilation_level SIMPLE --language_out ECMASCRIPT5 --warning_level QUIET 2>&1 > output.txt
-        # run: compilerOutput=$((google-closure-compiler --js ./src/pwamp.js --compilation_level SIMPLE --language_out ECMASCRIPT5 --warning_level QUIET) 2>&1) && echo "::set-output name=compilerOutput::$compilerOutput" && echo "${{steps.pwamp-closure-compiler.outputs.compilerOutput}}"
-        # run: echo "::set-output name=outputMsg::'$(echo $(google-closure-compiler --js ./src/pwamp.js --compilation_level SIMPLE --language_out ECMASCRIPT5 --warning_level QUIET) 2>@1)'"
-        # id: pwamp-closure-compiler
-      - name: Save output to var
-        run: echo "::set-output name=compilerOutput::$(cat output.txt)"
-        id: pwamp-closure-compiler
-      # - name: Handle output
-      #   run: echo "${{toJSON(steps)}}"
-        # ------- #
-      # - name: Run closure compiler
-      #   uses: ./.github/actions/closure-compiler/
-      #   with: 
-      #     github: "${{toJSON(github)}}"
-      #     steps: "${{toJSON(steps)}}"
-      #     gchat_webhook: "${{secrets.gchat_webhook}}"
-      #   id: pwamp-closure-compiler
-        # ------- #
-      # - name: Send Google Chat Notification
-      #   run: |
-      #     curl --location --request POST '${{ secrets.gchat_webhook }}' \
-      #     --header 'Content-Type: application/json' \
-      #     -d ${{steps.pwamp-closure-compiler.outputs.chat-msg}}
-      # - name: Install Google Chat dependencies
-      #   run: cd .github/actions/google-chat-notification-on-push && npm ci && cd ../../..
       # - name: Format Msg
       #   uses: ./.github/actions/google-chat-notification-on-push/
-      #   with: 
+      #   with:
       #     event: "${{toJSON(github.event)}}"
       #     steps: "${{toJSON(steps)}}"
       #   id: modded
       - name: Dev Output
-          # echo "${{toJSON(github)}}"
         run: |
-          echo "${{toJSON(steps)}}"
+          echo "${{github.event}}"
+      # - name: Send Google Chat Notification
+      #   run: |
+      #     curl --location --request POST 'https://chat.googleapis.com/v1/spaces/AAAA72wbnqo/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=1iD1-r6ibCBa3VbHdTzYLMp-exJU70e_J0__XvWXQSA%3D' \
+      #     --header 'Content-Type: application/json' \
+      #     -d ${{steps.modded.outputs.chat-msg}}
