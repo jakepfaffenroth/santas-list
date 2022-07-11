@@ -13,20 +13,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          token: GITHUB_TOKEN
+          token: ${{ github.token }}
       - name: Set up Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
       - name: Install dependencies
         run: npm ci 
       - name: Run linters
         uses: wearerequired/lint-action@v2
         with:
           prettier: true
-      - name: Install closeure compiler
-        run: npm i -g google-closure-compiler
-      - name: Run closure compiler
-        run: echo "::set-output name=compile::$(google-closure-compiler --js ./src/pwamp.js --js_output_file pwamp.compiled.js)"
-        id: pwamp-closure-compiler
+      # - name: Install closeure compiler
+      #   run: npm i -g google-closure-compiler
+      # - name: Run closure compiler
+      #   run: echo "::set-output name=compile::$(google-closure-compiler --js ./src/pwamp.js --js_output_file pwamp.compiled.js)"
+      #   id: pwamp-closure-compiler
       # - id: files
       #   uses: jitterbit/get-changed-files@v1
       #   with:
