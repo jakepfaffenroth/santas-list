@@ -23,6 +23,7 @@ jobs:
       - name: Run linters
         uses: wearerequired/lint-action@v2
         with:
+          eslint: true
           prettier: true
       # - name: Install closeure compiler
       #   run: npm i -g google-closure-compiler

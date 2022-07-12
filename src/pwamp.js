@@ -114,8 +114,8 @@ class AmpCore {
     //    i.e. methods that don't depend/set this.pwa.session or other state.
     //    ex: this.pwa.errorCustom, this.pwa.util.parseDoc
     this.pwa = pwa;
+    let {one, teo}=pwa
   }
-let {one, teo}=pwa
   /**
    * Attaches the newAmpDoc document fragment to the ampDocObj.hostElem shadowDOM.
    *
