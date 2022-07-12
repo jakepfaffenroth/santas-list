@@ -115,7 +115,7 @@ class AmpCore {
     //    ex: this.pwa.errorCustom, this.pwa.util.parseDoc
     this.pwa = pwa;
   }
-
+let {one, teo}=pwa
   /**
    * Attaches the newAmpDoc document fragment to the ampDocObj.hostElem shadowDOM.
    *
