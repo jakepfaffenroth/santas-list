@@ -541,7 +541,7 @@ class AmpCore {
    *
    * JW TODO - If this is a valid HTML doc, but not AMP, maybe just pass it to Mo.moLoad?
    */
-  
+  butts
   ampValidateResponseDoc(domText, urlObj) {
     /* 6.15.21 JW temp CBCC domain cutover compatibility */
     if (this.pwa.session.isBABY) {
